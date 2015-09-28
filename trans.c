@@ -1,4 +1,7 @@
 /* 
+ * Jaquim Cadogan - 10709649
+ * Wout Kooijman - 10749586
+ *
  * trans.c - Matrix transpose B = A^T
  *
  * Each transpose function must have a prototype of the form:
