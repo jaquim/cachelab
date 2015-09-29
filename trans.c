@@ -14,9 +14,9 @@
 #include "cachelab.h"
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
-//void transpose32(int M, int N, int A[N][M], int B[M][N]);
-//void transpose64(int M, int N, int A[N][M], int B[M][N]);
-//void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
+void transpose32(int M, int N, int A[N][M], int B[M][N]);
+void transpose64(int M, int N, int A[N][M], int B[M][N]);
+void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
 
 /* 
  * transpose_submit - This is the solution transpose function that you
@@ -28,17 +28,17 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-/*
+
     if(N == 32){
-        transpose32(M, N, A[N][M], B[M][N]);
+        transpose32(M, N, A, B);
     }
     else if(N == 64){
-        transpose64(M, N, A[N][M], B[M][N]);
+        transpose64(M, N, A, B);
     }
     else if(N == 61 || M == 67){
-        transposeAsym(M, N, A[N][M], B[M][N]);
+        transposeAsym(M, N, A, B);
     }
-*/
+
 }
 
 /* 
