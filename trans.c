@@ -114,6 +114,10 @@ void registerFunctions()
 
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc); 
+    registerTransFunction(transpose32, transpose_desc_32); 
+    registerTransFunction(transpose64, transpose_desc_64); 
+    registerTransFunction(transposeAsym, transpose_desc_Asym); 
+
 
 }
 
