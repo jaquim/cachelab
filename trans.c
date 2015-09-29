@@ -61,7 +61,7 @@ void trans(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_submit_desc[] = "Transpose submission";
+char transpose32[] = "Transpose submission";
 void transpose32(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -74,7 +74,7 @@ void transpose32(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_submit_desc[] = "Transpose submission";
+char transpose64[] = "Transpose submission";
 void transpose64(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -87,7 +87,7 @@ void transpose64(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_submit_desc[] = "Transpose submission";
+char transposeAsym[] = "Transpose submission";
 void tranposeAsym(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
