@@ -25,8 +25,19 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
+
+    if(N == 32){
+        transpose32(int M, int N, int A[N][M], int B[M][N]);
+    }
+    else if(N == 64){
+        transpose64(int M, int N, int A[N][M], int B[M][N]);
+    }
+    else if(N == 61 || M == 67){
+        transposeAsym(int M, int N, int A[N][M], int B[M][N]);
+    }
 }
 
+void 
 /* 
  * You can define additional transpose functions below. We've defined
  * a simple one below to help you get started. 
@@ -49,6 +60,44 @@ void trans(int M, int N, int A[N][M], int B[M][N])
 
 }
 
+void transpose32(int M, int N, int A[N][M], int B[M][N])
+{
+    int i, j, tmp;
+
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
+            tmp = A[i][j];
+            B[j][i] = tmp;
+        }
+    }    
+
+}
+
+void transpose64(int M, int N, int A[N][M], int B[M][N])
+{
+    int i, j, tmp;
+
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
+            tmp = A[i][j];
+            B[j][i] = tmp;
+        }
+    }    
+
+}
+
+void tranposeAsym(int M, int N, int A[N][M], int B[M][N])
+{
+    int i, j, tmp;
+
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
+            tmp = A[i][j];
+            B[j][i] = tmp;
+        }
+    }    
+
+}
 /*
  * registerFunctions - This function registers your transpose
  *     functions with the driver.  At runtime, the driver will
