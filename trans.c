@@ -14,9 +14,9 @@
 #include "cachelab.h"
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
-void transpose32(int M, int N, int A[N][M], int B[M][N]);
-void transpose64(int M, int N, int A[N][M], int B[M][N]);
-void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
+//void transpose32(int M, int N, int A[N][M], int B[M][N]);
+//void transpose64(int M, int N, int A[N][M], int B[M][N]);
+//void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
 
 /* 
  * transpose_submit - This is the solution transpose function that you
@@ -61,7 +61,7 @@ void trans(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-
+char transpose_submit_desc[] = "Transpose submission";
 void transpose32(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -74,7 +74,7 @@ void transpose32(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-
+char transpose_submit_desc[] = "Transpose submission";
 void transpose64(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -87,7 +87,7 @@ void transpose64(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-
+char transpose_submit_desc[] = "Transpose submission";
 void tranposeAsym(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
