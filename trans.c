@@ -27,13 +27,13 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
 
     if(N == 32){
-        transpose32(int M, int N, int A[N][M], int B[M][N]);
+        transpose32(M, N, A[N][M], B[M][N]);
     }
     else if(N == 64){
-        transpose64(int M, int N, int A[N][M], int B[M][N]);
+        transpose64(M, N, A[N][M], B[M][N]);
     }
     else if(N == 61 || M == 67){
-        transposeAsym(int M, int N, int A[N][M], int B[M][N]);
+        transposeAsym(M, N, A[N][M], B[M][N]);
     }
 }
 
