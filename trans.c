@@ -37,7 +37,6 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     }
 }
 
-void 
 /* 
  * You can define additional transpose functions below. We've defined
  * a simple one below to help you get started. 
