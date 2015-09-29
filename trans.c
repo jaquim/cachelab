@@ -28,7 +28,7 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-
+/*
     if(N == 32){
         transpose32(M, N, A[N][M], B[M][N]);
     }
@@ -38,6 +38,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     else if(N == 61 || M == 67){
         transposeAsym(M, N, A[N][M], B[M][N]);
     }
+*/
 }
 
 /* 
@@ -88,7 +89,7 @@ void transpose64(int M, int N, int A[N][M], int B[M][N])
 
 }
 char transpose_desc_Asym[] = "Transpose submission";
-void tranposeAsym(int M, int N, int A[N][M], int B[M][N])
+void transposeAsym(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
 
