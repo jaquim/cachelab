@@ -29,14 +29,39 @@ char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
 
-    if(N == 32){
-        transpose32(M, N, A, B);
+    int i,j,k,p0,p1;
+    int d = 0;
+    int* t;
+ 
+    if(M == 32 && N == 32){
+        for(i = 0; i < N; i += 8){
+            for(j = 0; j < M; j += 8){
+                for(p0 = i; p0 < i + 8; p0++){
+                    t = A[p0];
+                    if(i == j) d = t[p0];
+                    for(p1 = j; p1 < j + 8; p1++){
+                        if(p0 != p1) B[p1][p0] = A[p0][p1];
+                    }
+                    if(i == j)B[p0][p0] = d;
+                }
+            }
+        }
     }
+
     else if(N == 64){
         transpose64(M, N, A, B);
     }
-    else if(N == 61 || M == 67){
-        transposeAsym(M, N, A, B);
+
+    else if(M == 61 && N == 67){
+        for(i = 0; i < N; i += 8){
+            for(j = 0; j < M; j += 8){
+                for(p0 = j; p0 < j + 8 && p0 < M; p0++){
+                    for(p1 = i; p1 < i + 8 && p1 < N; p1++){
+                        B[p0][p1] = A[p1][p0];
+                    }
+                }
+            }
+        }
     }
 
 }
@@ -63,24 +88,16 @@ void trans(int M, int N, int A[N][M], int B[M][N])
 
 }
 char transpose_desc_32[] = "Transpose of function for a 32x32 matrix";
-void transpose32(int M, int N, int A[N][M], int B[M][N], int blockRow, int blockCol, int p0, int p1)
+void transpose32(int M, int N, int A[N][M], int B[M][N])
 {
-    int blockRow,blockCol,k,p0,p1,p2,p3,p4,p5,p6,p7;
-    int d = 0;
-    int* t;
+    int i, j, tmp;
 
-    for(blockRow = 0; blockRow < N; blockRow += 8){
-            for(blockCol = 0; blockCol < M; blockCol += 8){
-                for(p0 = blockRow; p0 < blockRow + 8; p0++){
-                    t = A[p0];
-                    if(blockRow == blockCol) d = t[p0];
-                    for(p1 = blockCol; p1 < blockCol + 8; p1++){
-                        if(p0 != p1) B[p1][p0] = A[p0][p1];
-                    }
-                    if(blockRow == blockCol)B[p0][p0] = d;
-                }
-            }
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
+            tmp = A[i][j];
+            B[j][i] = tmp;
         }
+    }    
 
 }
 char transpose_desc_64[] = "Transpose of function for a 64x64 matrix";
