@@ -12,6 +12,9 @@
  */ 
 #include <stdio.h>
 #include "cachelab.h"
+#include <assert.h>
+#include <sys/time.h>
+#include <stdint.h>
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
@@ -22,11 +25,44 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
  *     searches for that string to identify the transpose function to
  *     be graded. 
  */
+
+
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-}
+	int blockSize = 8;
+    int* t;
+    
+ 
+    if(M == 32 && N == 32){
+        for(int i = 0; i < N; i += blockSize){
+            for(int j = 0; j < N; j += blockSize){
+                for(int k = i; k < i + blockSize; k++){
+                    for(int l = j; l < j + blockSize; l++){
+                        if(k != l) B[l][k] = A[k][l];
+                    }
+                    // diagonal
+                    if(i == j) {
+                    	t = A[k];
+                    	B[k][k] = t[k];
+                    }
+                }
+            }
+        }
+    }
 
+    if(M == 61 && N == 67){
+        for(int i = 0; i < N; i += blockSize){
+            for(int j = 0; j < M; j += blockSize){
+                for(int k = j; k < j + blockSize && k < M; k++){
+                    for(int l = i; l < i + blockSize && l < N; l++){
+                        B[k][l] = A[l][k];
+                    }
+                }
+            }
+        }
+    }
+}
 /* 
  * You can define additional transpose functions below. We've defined
  * a simple one below to help you get started. 
