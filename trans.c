@@ -29,11 +29,8 @@ char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
 
-    int blockRow,blockCol,k,p0,p1,p2,p3,p4,p5,p6,p7;
-    int* t;
-
     if(N == 32){
-        transpose32(M, N, A, B, &blockRow, &blockCol, &p0, &p1);
+        transpose32(M, N, A, B);
     }
     else if(N == 64){
         transpose64(M, N, A, B);
@@ -68,7 +65,9 @@ void trans(int M, int N, int A[N][M], int B[M][N])
 char transpose_desc_32[] = "Transpose of function for a 32x32 matrix";
 void transpose32(int M, int N, int A[N][M], int B[M][N], int blockRow, int blockCol, int p0, int p1)
 {
+    int blockRow,blockCol,k,p0,p1,p2,p3,p4,p5,p6,p7;
     int d = 0;
+    int* t;
 
     for(blockRow = 0; blockRow < N; blockRow += 8){
             for(blockCol = 0; blockCol < M; blockCol += 8){
