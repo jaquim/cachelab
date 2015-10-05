@@ -17,10 +17,6 @@
 #include <stdint.h>
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
-void transpose32(int M, int N, int A[N][M], int B[M][N]);
-void transpose64(int M, int N, int A[N][M], int B[M][N]);
-void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
-
 /* 
  * transpose_submit - This is the solution transpose function that you
  *     will be graded on for Part B of the assignment. Do not change
@@ -42,7 +38,9 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
             for(int j = 0; j < N; j += blockSize){
                 for(int k = i; k < i + blockSize; k++){
                     for(int l = j; l < j + blockSize; l++){
-                        if(k != l) B[l][k] = A[k][l];
+                        if(k != l){
+                            B[l][k] = A[k][l];
+                        } 
                     }
                     // diagonal check, if so, no switch is necessary.
                     if(i == j) {
@@ -65,6 +63,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
             }
         }
     }
+    is_transpose(M, N, A, B);
 }
 /* 
  * You can define additional transpose functions below. We've defined
@@ -87,45 +86,7 @@ void trans(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_desc_32[] = "Transpose of function for a 32x32 matrix";
-void transpose32(int M, int N, int A[N][M], int B[M][N])
-{
-    int i, j, tmp;
 
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < M; j++) {
-            tmp = A[i][j];
-            B[j][i] = tmp;
-        }
-    }    
-
-}
-char transpose_desc_64[] = "Transpose of function for a 64x64 matrix";
-void transpose64(int M, int N, int A[N][M], int B[M][N])
-{
-    int i, j, tmp;
-
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < M; j++) {
-            tmp = A[i][j];
-            B[j][i] = tmp;
-        }
-    }    
-
-}
-char transpose_desc_Asym[] = "Transpose of function for a asymmetric matrix";
-void transposeAsym(int M, int N, int A[N][M], int B[M][N])
-{
-    int i, j, tmp;
-
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < M; j++) {
-            tmp = A[i][j];
-            B[j][i] = tmp;
-        }
-    }    
-
-}
 /*
  * registerFunctions - This function registers your transpose
  *     functions with the driver.  At runtime, the driver will
@@ -140,10 +101,6 @@ void registerFunctions()
 
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc); 
-    registerTransFunction(transpose32, transpose_desc_32); 
-    registerTransFunction(transpose64, transpose_desc_64); 
-    registerTransFunction(transposeAsym, transpose_desc_Asym); 
-
 
 }
 
