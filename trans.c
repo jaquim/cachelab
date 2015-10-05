@@ -29,14 +29,23 @@ char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
 
-    if(N == 32){
-        transpose32(M, N, A, B);
-    }
-    else if(N == 64){
-        transpose64(M, N, A, B);
-    }
-    else if(N == 61 || M == 67){
-        transposeAsym(M, N, A, B);
+    int blockRow,blockCol,k,p0,p1,p2,p3,p4,p5,p6,p7;
+    int d = 0;
+    int* t;
+ 
+    if(M == 32 && N == 32){
+        for(blockRow = 0; blockRow < N; blockRow += 8){
+            for(blockCol = 0; blockCol < M; blockCol += 8){
+                for(p0 = blockRow; p0 < blockRow + 8; p0++){
+                    t = A[p0];
+                    if(blockRow == blockCol) d = t[p0];
+                    for(p1 = blockCol; p1 < blockCol + 8; p1++){
+                        if(p0 != p1) B[p1][p0] = A[p0][p1];
+                    }
+                    if(blockRow == blockCol)B[p0][p0] = d;
+                }
+            }
+        }
     }
 
 }
