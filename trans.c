@@ -30,19 +30,21 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
 
     int i,j,p0,p1;
-    int d = 0;
     int* t;
  
     if(M == 32 && N == 32){
         for(i = 0; i < N; i += 8){
             for(j = 0; j < M; j += 8){
                 for(p0 = i; p0 < i + 8; p0++){
-                    t = A[p0];
-                    if(i == j) d = t[p0];
                     for(p1 = j; p1 < j + 8; p1++){
-                        if(p0 != p1) B[p1][p0] = A[p0][p1];
+                        if(p0 != p1){
+                            B[p1][p0] = A[p0][p1];
+                        } 
                     }
-                    if(i == j)B[p0][p0] = d;
+                    if(i == j) {
+                        t = A[p0];
+                        B[p0][p0] = t[p0];
+                    }
                 }
             }
         }
