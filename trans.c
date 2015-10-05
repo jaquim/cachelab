@@ -62,7 +62,7 @@ void trans(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_desc_32[] = "Transpose submission";
+char transpose_desc_32[] = "Transpose of function for a 32x32 matrix";
 void transpose32(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -75,7 +75,7 @@ void transpose32(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_desc_64[] = "Transpose submission";
+char transpose_desc_64[] = "Transpose of function for a 64x64 matrix";
 void transpose64(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
@@ -88,7 +88,7 @@ void transpose64(int M, int N, int A[N][M], int B[M][N])
     }    
 
 }
-char transpose_desc_Asym[] = "Transpose submission";
+char transpose_desc_Asym[] = "Transpose of function for a asymmetric matrix";
 void transposeAsym(int M, int N, int A[N][M], int B[M][N])
 {
     int i, j, tmp;
