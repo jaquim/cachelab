@@ -12,6 +12,9 @@
  */ 
 #include <stdio.h>
 #include "cachelab.h"
+#include <assert.h>
+#include <sys/time.h>
+#include <stdint.h>
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 void transpose32(int M, int N, int A[N][M], int B[M][N]);
@@ -25,49 +28,44 @@ void transposeAsym(int M, int N, int A[N][M], int B[M][N]);
  *     searches for that string to identify the transpose function to
  *     be graded. 
  */
+
+
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-
-    int i,j,p0,p1;
+	int blockSize = 8;
     int* t;
+    
  
     if(M == 32 && N == 32){
-        for(i = 0; i < N; i += 8){
-            for(j = 0; j < M; j += 8){
-                for(p0 = i; p0 < i + 8; p0++){
-                    for(p1 = j; p1 < j + 8; p1++){
-                        if(p0 != p1){
-                            B[p1][p0] = A[p0][p1];
-                        } 
+        for(int i = 0; i < N; i += blockSize){
+            for(int j = 0; j < N; j += blockSize){
+                for(int k = i; k < i + blockSize; k++){
+                    for(int l = j; l < j + blockSize; l++){
+                        if(k != l) B[l][k] = A[k][l];
                     }
+                    // diagonal check, if so, no switch is necessary.
                     if(i == j) {
-                        t = A[p0];
-                        B[p0][p0] = t[p0];
+                    	t = A[k];
+                    	B[k][k] = t[k];
                     }
                 }
             }
         }
     }
 
-    else if(N == 64){
-        transpose64(M, N, A, B);
-    }
-
-    else if(M == 61 && N == 67){
-        for(i = 0; i < N; i += 8){
-            for(j = 0; j < M; j += 8){
-                for(p0 = j; p0 < j + 8 && p0 < M; p0++){
-                    for(p1 = i; p1 < i + 8 && p1 < N; p1++){
-                        B[p0][p1] = A[p1][p0];
+    if(M == 61 && N == 67){
+        for(int i = 0; i < N; i += blockSize){
+            for(int j = 0; j < M; j += blockSize){
+                for(int k = j; k < j + blockSize && k < M; k++){
+                    for(int l = i; l < i + blockSize && l < N; l++){
+                        B[k][l] = A[l][k];
                     }
                 }
             }
         }
     }
-
 }
-
 /* 
  * You can define additional transpose functions below. We've defined
  * a simple one below to help you get started. 
