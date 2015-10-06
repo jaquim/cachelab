@@ -30,16 +30,38 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-	int blockSize = 8;
-    int* t;
-    
- 
+	
     if(M == 32 && N == 32){
+    	int blockSize = 8;
+    	int* t;
         for(int i = 0; i < N; i += blockSize){
             for(int j = 0; j < N; j += blockSize){
                 for(int k = i; k < i + blockSize; k++){
                     for(int l = j; l < j + blockSize; l++){
-                        if(k != l) B[l][k] = A[k][l];
+                        if(k != l){
+                        	B[l][k] = A[k][l];
+                        }
+                    }
+                    // diagonal
+                    if(i == j) {
+                    	t = A[k];
+                    	B[k][k] = t[k];
+                    }
+                }
+            }
+        }
+    }
+
+    if(M == 64 && N == 64){
+    	int blockSize = 4;
+    	int* t;
+        for(int i = 0; i < N; i += blockSize){
+            for(int j = 0; j < N; j += blockSize){
+                for(int k = i; k < i + blockSize; k++){
+                    for(int l = j; l < j + blockSize; l++){
+                        if(k != l){
+                        	B[l][k] = A[k][l];
+                        } 
                     }
                     // diagonal
                     if(i == j) {
@@ -52,6 +74,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     }
 
     if(M == 61 && N == 67){
+    	int blockSize = 14;
         for(int i = 0; i < N; i += blockSize){
             for(int j = 0; j < M; j += blockSize){
                 for(int k = j; k < j + blockSize && k < M; k++){
